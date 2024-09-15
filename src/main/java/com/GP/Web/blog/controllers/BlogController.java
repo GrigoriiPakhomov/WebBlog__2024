@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.GP.Web.blog.models.Post;
 import com.GP.Web.blog.repo.PostRepository;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BlogController {
@@ -20,4 +22,15 @@ public class BlogController {
         model.addAttribute("posts", posts);
         return "blog-main";
     }
+    @GetMapping("/blog/add")
+    public String blogAdd(Model model) {
+        return "blog-add";
+    }
+    @PostMapping("/blog/add")
+    public String blogPostAdd(@RequestParam String title, @RequestParam String anons,@RequestParam String full_text, Model model) {
+         Post post = new Post(title, anons, full_text);
+         postRepository.save(post)
+        return "blog-add";
+    }
+
 }
